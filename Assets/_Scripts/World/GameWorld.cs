@@ -8,5 +8,8 @@ using TheSTAR.Utility;
 
 public class GameWorld : MonoBehaviour
 {
-    
+    public void StartGame()
+    {
+        
+    }
 }

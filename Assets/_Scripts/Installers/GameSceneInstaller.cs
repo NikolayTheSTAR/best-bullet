@@ -8,9 +8,9 @@ using TheSTAR.GUI;
 /// </summary>
 public class GameSceneInstaller : MonoInstaller
 {
-    [SerializeField] private GameWorld worldPrefab;
     [SerializeField] private CameraController worldCameraPrefab;
     [SerializeField] private GameController gameControllerPrefab;
+    [SerializeField] private Player playerPrefab;
 
     [Header("GUI")]
     [SerializeField] private GuiController guiControllerPrefab;
@@ -28,12 +28,12 @@ public class GameSceneInstaller : MonoInstaller
     {
         InstallGuiContainers();
 
+        var player = Container.InstantiatePrefabForComponent<Player>(playerPrefab);
+        Container.Bind<Player>().FromInstance(player).AsSingle();
+        Container.Bind<ICameraFocusable>().FromInstance(player).AsSingle();
+
         var camera = Container.InstantiatePrefabForComponent<CameraController>(worldCameraPrefab);
         Container.Bind<CameraController>().FromInstance(camera).AsSingle();
-        
-        // world
-        var world = Container.InstantiatePrefabForComponent<GameWorld>(worldPrefab);
-        Container.Bind<GameWorld>().FromInstance(world).AsSingle();
 
         var gameController = Container.InstantiatePrefabForComponent<GameController>(gameControllerPrefab);
         Container.Bind<GameController>().FromInstance(gameController).AsSingle();
