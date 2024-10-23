@@ -61,10 +61,18 @@ public class GameController : MonoBehaviour
 
     private void StartGame()
     {
-        gui.ShowMainScreen();
+        if (!data.gameData.commonData.gameStarted)
+        {
+            player.Init(gameConfig.Get.PlayerMaxHP, gameConfig.Get.PlayerMaxHP);
+            data.gameData.commonData.gameStarted = true;
+        }
+        else
+        {
+            player.Init(data.gameData.playerData.playerCurrentHp, data.gameData.playerData.playerMaxHp);
+            player.transform.position = data.gameData.playerData.playerPosition;
+        }
 
-        if (!data.gameData.commonData.gameStarted) data.gameData.commonData.gameStarted = true;
-        else player.transform.position = data.gameData.playerData.playerPosition;
+        gui.ShowMainScreen();
     }
 
     private void OnApplicationPause()
@@ -82,6 +90,8 @@ public class GameController : MonoBehaviour
         Debug.Log("AutoSave");
         BeforeAutoSaveGameEvent?.Invoke();
         data.gameData.playerData.playerPosition = player.transform.position;
+        data.gameData.playerData.playerCurrentHp = player.HpSystem.CurrentHP;
+        data.gameData.playerData.playerMaxHp = player.HpSystem.MaxHP;
         data.SaveAll();
     }
 }

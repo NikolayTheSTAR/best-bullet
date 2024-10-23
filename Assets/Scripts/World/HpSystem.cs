@@ -6,6 +6,9 @@ public class HpSystem : MonoBehaviour
     private int currentHp;
     private int maxHp;
 
+    public int CurrentHP => currentHp;
+    public int MaxHP => maxHp;
+
     public event Action<int, int> OnChangeHpEvent;
     public event Action OnDamageEvent;
     public event Action OnDieEvent;

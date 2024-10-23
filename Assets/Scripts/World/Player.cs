@@ -20,14 +20,9 @@ public class Player : Creature, ICameraFocusable, IKeyInputHandler
         this.currency = currency;
     }
 
-    private void Start()
+    public override void Init(int currentHp, int maxHp)
     {
-        Init();
-    }
-
-    private void Init()
-    {
-        hpSystem.Init(10, 10);
+        base.Init(currentHp, maxHp);
 
         itemGetter.Init();
         itemGetter.OnGetCurrencyEvent += (index, itemType, value) =>
