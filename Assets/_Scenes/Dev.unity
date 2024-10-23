@@ -894,6 +894,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlyUICanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7576786353513169074, guid: ca2cd59cee8904d76b3cb8118142d061, type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 9129784443460389739, guid: ca2cd59cee8904d76b3cb8118142d061, type: 3}
       propertyPath: m_Pivot.x
       value: 0

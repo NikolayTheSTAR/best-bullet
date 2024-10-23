@@ -12,8 +12,8 @@ namespace World
 
         public void Init(Action<Collider> onEnter, Action<Collider> onExit)
         {
-            _onTriggerEnter = onEnter;
-            _onTriggerExit = onExit;
+            _onTriggerEnter += onEnter;
+            _onTriggerExit += onExit;
         }
 
         private void OnTriggerEnter(Collider other)

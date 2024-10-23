@@ -1,11 +1,32 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using Zenject;
 
 public class Player : MonoBehaviour, ICameraFocusable, IKeyInputHandler
 {
     [SerializeField] private NavMeshAgent meshAgent;
     [SerializeField] private Transform visualTran;
+    [SerializeField] private CurrencyInWorldGetter currencyGetter;
+
+    private CurrencyController currency;
+
+    [Inject]
+    private void Construct(CurrencyController currency)
+    {
+        this.currency = currency;
+    }
+
+    private void Start()
+    {
+        Init();
+    }
+
+    private void Init()
+    {
+        currencyGetter.Init();
+        currencyGetter.OnGetCurrencyEvent += (currencyType, count) => currency.AddCurrency(currencyType, count, true);
+    }
 
     #region KeyInput
 

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using TheSTAR.Data;
 using TheSTAR.Utility;
-using Sirenix.OdinInspector;
+//using Sirenix.OdinInspector;
 using Random = UnityEngine.Random;
 using Zenject;
 
@@ -98,9 +98,11 @@ public class CurrencyController
 public struct CurrencyValue
 {
     public CurrencyType currencyType;
-    [HideIf("useRange")] public int value;
+    //[HideIf("useRange")] 
+    public int value;
     public bool useRange;
-    [ShowIf("useRange")] public IntRange valueRange;
+    //[ShowIf("useRange")] 
+    public IntRange valueRange;
 }
 
 public enum CurrencyType

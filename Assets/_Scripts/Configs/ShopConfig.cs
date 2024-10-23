@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Sirenix.OdinInspector;
+//using Sirenix.OdinInspector;
 using UnityEngine.Purchasing;
 
 [CreateAssetMenu(menuName = "Data/Shop", fileName = "ShopConfig")]
@@ -14,15 +14,15 @@ public class ShopConfig : ScriptableObject
 public struct ProductData
 {
     public ProductCostType costType;
-    [LabelText("costValue ($)")]
+    //[LabelText("costValue ($)")]
     public float costValue;
 
     public ShopRewardType rewardType;
 
-    [ShowIf("@costType == ProductCostType.Real")]
+    //[ShowIf("@costType == ProductCostType.Real")]
     public string SKU;
 
-    [ShowIf("@costType == ProductCostType.Real")]
+    //[ShowIf("@costType == ProductCostType.Real")]
     public ProductType ProductType;
 }
 

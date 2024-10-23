@@ -1,15 +1,14 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Sirenix.OdinInspector;
 
 namespace TheSTAR.Sound
 {
     [CreateAssetMenu(menuName = "Data/Sound", fileName = "SoundConfig")]
     public class SoundConfig : ScriptableObject
     {
-        [SerializeField, Searchable] private List<SoundData> soundDatas = new List<SoundData>();
-        [SerializeField, Searchable] private List<MusicData> musicDatas = new List<MusicData>();
+        [SerializeField] private List<SoundData> soundDatas = new List<SoundData>();
+        [SerializeField] private List<MusicData> musicDatas = new List<MusicData>();
 
         [Space]
         [SerializeField] private float timeClear = 1; 

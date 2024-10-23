@@ -1,5 +1,4 @@
 using System;
-using Sirenix.OdinInspector;
 using TheSTAR.Sound;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +10,7 @@ namespace TheSTAR.GUI
     public class PointerButton : Pointer
     {
         [SerializeField] private bool scrollable;
-        [ShowIf("scrollable")]
+        //[ShowIf("scrollable")]
         [SerializeField] private ScrollRect scrollRect;
         [Space]
         [SerializeField] protected PointerButtonInfo _info = new PointerButtonInfo();
@@ -176,22 +175,32 @@ namespace TheSTAR.GUI
         public class PointerButtonInfo
         {
             public bool _useEnterSound => false;
-            [ShowIf("_useEnterSound")] public SoundType _enterSoundType;
+            //[ShowIf("_useEnterSound")] 
+            public SoundType _enterSoundType;
 
             public bool _useClickSound;
-            [ShowIf("_useClickSound")] public SoundType _clickSoundType;
+            //[ShowIf("_useClickSound")] 
+            public SoundType _clickSoundType;
             
             public bool _useChangeSprite;
-            [ShowIf("_useChangeSprite")] public Sprite _idleSprite;
-            [ShowIf("_useChangeSprite")] public Sprite _selectSprite;
-            [ShowIf("_useChangeSprite")] public Sprite _pressSprite;
-            [ShowIf("_useChangeSprite")] public Sprite _disableSprite;
+            //[ShowIf("_useChangeSprite")] 
+            public Sprite _idleSprite;
+            //[ShowIf("_useChangeSprite")] 
+            public Sprite _selectSprite;
+            //[ShowIf("_useChangeSprite")]
+            public Sprite _pressSprite;
+            //[ShowIf("_useChangeSprite")]
+            public Sprite _disableSprite;
 
             public bool _useChangeColor;
-            [ShowIf("_useChangeColor")] public Color _idleColor = Color.white;
-            [ShowIf("_useChangeColor")] public Color _selectColor = Color.white;
-            [ShowIf("_useChangeColor")] public Color _pressColor = new (0.8f, 0.8f, 0.8f, 1);
-            [ShowIf("_useChangeColor")] public Color _disableColor = Color.white;
+            //[ShowIf("_useChangeColor")] 
+            public Color _idleColor = Color.white;
+            //[ShowIf("_useChangeColor")] 
+            public Color _selectColor = Color.white;
+            //[ShowIf("_useChangeColor")] 
+            public Color _pressColor = new (0.8f, 0.8f, 0.8f, 1);
+            //[ShowIf("_useChangeColor")] 
+            public Color _disableColor = Color.white;
 
             //[ShowIf("@_useChangeSprite || _useChangeColor")] 
             public Image _img;
