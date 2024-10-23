@@ -6,7 +6,7 @@ TagManager:
   tags:
   - Source
   - Factory
-  - CurrencyInWorld
+  - Item
   layers:
   - Default
   - TransparentFX

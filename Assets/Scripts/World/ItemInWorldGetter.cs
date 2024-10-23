@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using World;
 
-public class CurrencyInWorldGetter : MonoBehaviour
+public class ItemInWorldGetter : MonoBehaviour
 {
     [SerializeField] private EntranceTrigger trigger;
-    [SerializeField] private Transform flyToPos;
+    //[SerializeField] private Transform flyToPos;
 
-    public event Action<int, CurrencyType, int> OnGetCurrencyEvent;
+    public event Action<int, ItemInWorldType, int> OnGetCurrencyEvent;
 
     public void Init()
     {
@@ -18,19 +18,19 @@ public class CurrencyInWorldGetter : MonoBehaviour
 
     private void OnEnter(Collider col)
     {
-        if (col.CompareTag("CurrencyInWorld"))
+        if (col.CompareTag("Item"))
         {
-            GetCurrencyFromWorld(col.gameObject.GetComponent<CurrencyInWorld>());
+            GetItemFromWorld(col.gameObject.GetComponent<ItemInWorld>());
         }
     }
 
-    private void GetCurrencyFromWorld(CurrencyInWorld currency)
+    private void GetItemFromWorld(ItemInWorld item)
     {
-        currency.gameObject.SetActive(false);
+        item.gameObject.SetActive(false);
         // todo fly currency to flyToPos (with DropContainer)
         // todo after fly call OnGetCurrencyEvent
         // todo зафиксировать что монета сбрана, она не должна появляться в следующей сессии
 
-        OnGetCurrencyEvent?.Invoke(currency.Index, currency.CurrencyType, currency.Value);
+        OnGetCurrencyEvent?.Invoke(item.Index, item.ItemType, item.Value);
     }
 }

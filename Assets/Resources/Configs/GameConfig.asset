@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   versionType: 0
   useCheats: 1
+  lockData: 0
+  useGDPR: 0
+  playerMaxHP: 10

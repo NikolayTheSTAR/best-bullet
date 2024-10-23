@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class CurrencyInWorld : MonoBehaviour
+public class ItemInWorld : MonoBehaviour
 {
-    [SerializeField] private CurrencyType currencyType;
+    [SerializeField] private ItemInWorldType itemType;
     [SerializeField] private int value = 1;
     
-    public CurrencyType CurrencyType => currencyType;
+    public ItemInWorldType ItemType => itemType;
     public int Value => value;
 
     private int index;
@@ -15,4 +15,10 @@ public class CurrencyInWorld : MonoBehaviour
     {
         this.index = index;
     }
+}
+
+public enum ItemInWorldType
+{
+    Coin,
+    HP
 }

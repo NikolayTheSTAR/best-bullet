@@ -64,7 +64,7 @@ public class GameController : MonoBehaviour
         gui.ShowMainScreen();
 
         if (!data.gameData.commonData.gameStarted) data.gameData.commonData.gameStarted = true;
-        else player.transform.position = data.gameData.commonData.playerPosition;
+        else player.transform.position = data.gameData.playerData.playerPosition;
     }
 
     private void OnApplicationPause()
@@ -81,7 +81,7 @@ public class GameController : MonoBehaviour
     {
         Debug.Log("AutoSave");
         BeforeAutoSaveGameEvent?.Invoke();
-        data.gameData.commonData.playerPosition = player.transform.position;
+        data.gameData.playerData.playerPosition = player.transform.position;
         data.SaveAll();
     }
 }

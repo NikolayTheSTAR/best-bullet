@@ -12,10 +12,14 @@ public class GameConfig : ScriptableObject
     [Space]
     [SerializeField] private bool useGDPR = true;
 
+    [Space]
+    [SerializeField] private int playerMaxHP = 10;
+
     public GameAbVersionType VersionType => versionType;
     public bool UseCheats => useCheats;
     public bool LockData => lockData;
     public bool UseGDPR => useGDPR;
+    public int PlayerMaxHP => playerMaxHP;
 
     [ContextMenu("Test")]
     private void ConfigurateForTest()

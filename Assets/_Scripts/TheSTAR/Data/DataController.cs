@@ -15,18 +15,6 @@ namespace TheSTAR.Data
         [Header("Test")]
         [SerializeField] private int testCompleteEvents;
 
-        private readonly Dictionary<DataSectionType, string> DataKeys = new ()
-        {
-            { DataSectionType.Common, "common_data" },
-            { DataSectionType.Settings, "settings_data" },
-            { DataSectionType.Currency, "currency_data" },
-            { DataSectionType.Level, "level_data" },
-            { DataSectionType.InappsData, "inapps_data" },
-            { DataSectionType.Notifications, "notifications_data" },
-            { DataSectionType.Tutorial, "tutorials_data" },
-            { DataSectionType.DailyBonus, "daily_bonus_data" },
-        };
-
         [Inject]
         private void Construct()
         {
@@ -51,14 +39,15 @@ namespace TheSTAR.Data
             foreach (var section in allSections) Save(section, force);
         }
 
-        public void Save(DataSectionType secion, bool force = false)
+        public void Save(DataSectionType secionType, bool force = false)
         {
             if (!force && lockSaves) return;
 
             JsonSerializerSettings settings = new() { TypeNameHandling = TypeNameHandling.Objects };
-            string jsonString = JsonConvert.SerializeObject(gameData.GetSection(secion), Formatting.Indented, settings);
+            var section = gameData.GetSection(secionType);
+            string jsonString = JsonConvert.SerializeObject(section, Formatting.Indented, settings);
 
-            PlayerPrefs.SetString(DataKeys[secion], jsonString);
+            PlayerPrefs.SetString(section.DataFileName, jsonString);
 
             //Debug.Log($"Save {secion}");
         }
@@ -66,7 +55,7 @@ namespace TheSTAR.Data
         [ContextMenu("Load")]
         private void LoadAll()
         {
-            if (PlayerPrefs.HasKey(DataKeys[DataSectionType.Common]))
+            if (PlayerPrefs.HasKey(gameData.GetSection(0).DataFileName))
             {
                 var allSections = EnumUtility.GetValues<DataSectionType>();
                 foreach (var section in allSections) LoadSection(section);
@@ -75,7 +64,8 @@ namespace TheSTAR.Data
 
             void LoadSection(DataSectionType section)
             {
-                string jsonString = PlayerPrefs.GetString(DataKeys[section]);
+
+                string jsonString = PlayerPrefs.GetString(gameData.GetSection(section).DataFileName);
                 var loadedData = JsonConvert.DeserializeObject<DataSection>(jsonString, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects });
                 gameData.SetSection(loadedData);
             }
@@ -104,6 +94,7 @@ namespace TheSTAR.Data
             public NotificationData notificationData;
             public TutorialData tutorialData;
             public DailyBonusData dailyBonusData;
+            public PlayerData playerData;
 
             public GameData()
             {
@@ -115,6 +106,7 @@ namespace TheSTAR.Data
                 notificationData = new();
                 tutorialData = new();
                 dailyBonusData = new();
+                playerData = new();
             }
 
             public DataSection GetSection(DataSectionType sectionType)
@@ -129,6 +121,7 @@ namespace TheSTAR.Data
                     case DataSectionType.Notifications: return notificationData;
                     case DataSectionType.Tutorial: return tutorialData;
                     case DataSectionType.DailyBonus: return dailyBonusData;
+                    case DataSectionType.Player: return playerData;
                     default:
                         break;
                 }
@@ -170,6 +163,10 @@ namespace TheSTAR.Data
                     case DataSectionType.DailyBonus:
                         dailyBonusData = (DailyBonusData)sectionData;
                         break;
+                    
+                    case DataSectionType.Player:
+                        playerData = (PlayerData)sectionData;
+                        break;
                 }
             }
         }
@@ -178,12 +175,14 @@ namespace TheSTAR.Data
         public abstract class DataSection
         {
             public abstract DataSectionType SectionType { get; }
+            public abstract string DataFileName { get; }
         }
 
         [Serializable]
         public class CommonData : DataSection
         {
             public override DataSectionType SectionType => DataSectionType.Common;
+            public override string DataFileName => "common_data";
 
             public bool gdprAccepted;
 
@@ -193,13 +192,13 @@ namespace TheSTAR.Data
             public DateTime nextRateUsPlan;
 
             public bool gameStarted = false;
-            public SerializedVector3 playerPosition;
         }
 
         [Serializable]
         public class SettingsData : DataSection
         {
             public override DataSectionType SectionType => DataSectionType.Settings;
+            public override string DataFileName => "settings_data";
 
             public bool isMusicOn = true;
             public bool isSoundsOn = true;
@@ -211,6 +210,7 @@ namespace TheSTAR.Data
         public class CurrencyData : DataSection
         {
             public override DataSectionType SectionType => DataSectionType.Currency;
+            public override string DataFileName => "currency_data";
 
             public Dictionary<CurrencyType, int> currencyData;
 
@@ -236,20 +236,23 @@ namespace TheSTAR.Data
         public class LevelData : DataSection
         {
             public override DataSectionType SectionType => DataSectionType.Level;
+            public override string DataFileName => "level_data";
 
-            public Dictionary<int, bool> collectedCurrencyItems = new();
+            public Dictionary<int, bool> collectedItems = new();
         }
 
         [Serializable]
         public class InappsData : DataSection
         {
             public override DataSectionType SectionType => DataSectionType.InappsData;
+            public override string DataFileName => "inapps_data";
         }
 
         [Serializable]
         public class NotificationData : DataSection
         {
             public override DataSectionType SectionType => DataSectionType.Notifications;
+            public override string DataFileName => "notifications_data";
 
             /// <summary>
             /// Хранит id зарегестрированных нотификаций. Если id равен -1, значит нотификация неактивна (например, она была отменена)
@@ -286,6 +289,7 @@ namespace TheSTAR.Data
         public class TutorialData : DataSection
         {
             public override DataSectionType SectionType => DataSectionType.Tutorial;
+            public override string DataFileName => "tutorials_data";
 
             public List<string> completedTutorials;
 
@@ -304,10 +308,22 @@ namespace TheSTAR.Data
         public class DailyBonusData : DataSection
         {
             public override DataSectionType SectionType => DataSectionType.DailyBonus;
+            public override string DataFileName => "daily_bonus_data";
 
             public DateTime previousDailyBonusTime;
             public int currentDailyBonusIndex = -1;
             public bool bonusIndexWasUpdatedForThisDay;
+        }
+    
+        [Serializable]
+        public class PlayerData : DataSection
+        {
+            public override DataSectionType SectionType => DataSectionType.Player;
+            public override string DataFileName => "player_data";
+
+            public SerializedVector3 playerPosition;
+            public int playerCurrentHp;
+            public int playerMaxHp;
         }
     }
 
@@ -320,7 +336,8 @@ namespace TheSTAR.Data
         InappsData,
         Notifications,
         Tutorial,
-        DailyBonus
+        DailyBonus,
+        Player
     }
 }
 

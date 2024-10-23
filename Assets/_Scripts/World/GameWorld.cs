@@ -8,7 +8,7 @@ using TheSTAR.Utility;
 
 public class GameWorld : MonoBehaviour
 {
-    [SerializeField] private CurrencyInWorld[] currency;
+    [SerializeField] private ItemInWorld[] currency;
 
     private DataController data;
 
@@ -25,7 +25,7 @@ public class GameWorld : MonoBehaviour
 
     public void LoadCurrencyItems()
     {
-        var collectedCurrencyItems = data.gameData.levelData.collectedCurrencyItems;
+        var collectedCurrencyItems = data.gameData.levelData.collectedItems;
 
         for (int i = 0; i < currency.Length; i++)
         {

@@ -7,6 +7,7 @@ namespace TheSTAR.GUI
     {
         [SerializeField] private PointerButton settingsBtn;
         [SerializeField] private PointerButton dailyBonusBtn;
+        [SerializeField] private HpBar hpBar;
 
         private DailyBonusService dailyBonus;
         private GuiController gui;
@@ -14,12 +15,19 @@ namespace TheSTAR.GUI
         private FlyUIContainer flyUI;
 
         [Inject]
-        private void Construct(DailyBonusService dailyBonus, GuiController gui, CurrencyController currency, FlyUIContainer flyUI)
+        private void Construct(
+            DailyBonusService dailyBonus, 
+            GuiController gui, 
+            CurrencyController currency, 
+            FlyUIContainer flyUI, 
+            Player player)
         {
             this.dailyBonus = dailyBonus;
             this.gui = gui;
             this.currency = currency;
             this.flyUI = flyUI;
+
+            player.HpSystem.OnChangeHpEvent += hpBar.Set;
         }
 
         public override void Init()

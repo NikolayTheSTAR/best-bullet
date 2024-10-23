@@ -4,15 +4,15 @@ using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
 
-public class Player : MonoBehaviour, ICameraFocusable, IKeyInputHandler
+public class Player : Creature, ICameraFocusable, IKeyInputHandler
 {
     [SerializeField] private NavMeshAgent meshAgent;
     [SerializeField] private Transform visualTran;
-    [SerializeField] private CurrencyInWorldGetter currencyGetter;
+    [SerializeField] private ItemInWorldGetter itemGetter;
 
     private DataController data;
     private CurrencyController currency;
-
+    
     [Inject]
     private void Construct(DataController data, CurrencyController currency)
     {
@@ -27,11 +27,21 @@ public class Player : MonoBehaviour, ICameraFocusable, IKeyInputHandler
 
     private void Init()
     {
-        currencyGetter.Init();
-        currencyGetter.OnGetCurrencyEvent += (index, currencyType, count) =>
+        hpSystem.Init(10, 10);
+
+        itemGetter.Init();
+        itemGetter.OnGetCurrencyEvent += (index, itemType, value) =>
         {
-            currency.AddCurrency(currencyType, count);
-            var colledtedItems = data.gameData.levelData.collectedCurrencyItems;
+            if (itemType == ItemInWorldType.Coin)
+            {
+                currency.AddCurrency(CurrencyType.Soft, value);
+            }
+            else if (itemType == ItemInWorldType.HP)
+            {
+                hpSystem.Heal(value);
+            }
+            
+            var colledtedItems = data.gameData.levelData.collectedItems;
             if (!colledtedItems.ContainsKey(index)) colledtedItems.Add(index, true);
             else colledtedItems[index] = true;
         };
