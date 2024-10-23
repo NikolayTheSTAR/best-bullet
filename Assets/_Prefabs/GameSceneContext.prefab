@@ -25,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 137917425032238124}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8718914180455733389
 MonoBehaviour:
@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldPrefab: {fileID: 2832483029581713376, guid: c5cc463d1e10f422281b894f98dcc29c, type: 3}
+  worldCameraPrefab: {fileID: 6289751917837412217, guid: 1774df53470d14ad4981c6633d4de100, type: 3}
   guiControllerPrefab: {fileID: 3393732523295581646, guid: c0611db02a3c248239e85f94284f46a2, type: 3}
   screenPrefabs:
   - {fileID: 6206188417071900033, guid: 9be99ed0a80e843bda5b43c335d7fed5, type: 3}
