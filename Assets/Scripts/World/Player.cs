@@ -1,4 +1,5 @@
 using System;
+using TheSTAR.Data;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
@@ -9,11 +10,13 @@ public class Player : MonoBehaviour, ICameraFocusable, IKeyInputHandler
     [SerializeField] private Transform visualTran;
     [SerializeField] private CurrencyInWorldGetter currencyGetter;
 
+    private DataController data;
     private CurrencyController currency;
 
     [Inject]
-    private void Construct(CurrencyController currency)
+    private void Construct(DataController data, CurrencyController currency)
     {
+        this.data = data;
         this.currency = currency;
     }
 
@@ -25,7 +28,13 @@ public class Player : MonoBehaviour, ICameraFocusable, IKeyInputHandler
     private void Init()
     {
         currencyGetter.Init();
-        currencyGetter.OnGetCurrencyEvent += (currencyType, count) => currency.AddCurrency(currencyType, count, true);
+        currencyGetter.OnGetCurrencyEvent += (index, currencyType, count) =>
+        {
+            currency.AddCurrency(currencyType, count);
+            var colledtedItems = data.gameData.levelData.collectedCurrencyItems;
+            if (!colledtedItems.ContainsKey(index)) colledtedItems.Add(index, true);
+            else colledtedItems[index] = true;
+        };
     }
 
     #region KeyInput

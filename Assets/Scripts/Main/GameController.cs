@@ -11,18 +11,23 @@ public class GameController : MonoBehaviour
     private DataController data;
     private GuiController gui;
     private SoundController sounds;
+    private Player player;
 
     private readonly ResourceHelper<GameConfig> gameConfig = new("Configs/GameConfig");
+
+    public event Action BeforeAutoSaveGameEvent;
 
     [Inject]
     private void Construct(
         DataController data,
         SoundController sounds,
-        GuiController gui)
+        GuiController gui,
+        Player player)
     {
         this.data = data;
         this.sounds = sounds;
         this.gui = gui;
+        this.player = player;
     }
 
     private void Start()
@@ -33,11 +38,6 @@ public class GameController : MonoBehaviour
 
         loadScreen.Init(() =>
         {
-            Action showStartGameScreens = () =>
-            {
-                gui.ShowMainScreen();
-            };
-
             if (gameConfig.Get.UseGDPR && !data.gameData.commonData.gdprAccepted)
             {
                 var gdprScreen = gui.FindScreen<GDPRScreen>();
@@ -48,17 +48,40 @@ public class GameController : MonoBehaviour
                     data.gameData.commonData.gdprAccepted = true;
                     data.Save(DataSectionType.Common);
 
-                    showStartGameScreens();
+                    StartGame();
                 });
                 gui.Show(gdprScreen);
                 return;
             }
-            else
-            {
-                showStartGameScreens();
-            }
+            else StartGame();
         });
 
         gui.Show(loadScreen);
+    }
+
+    private void StartGame()
+    {
+        gui.ShowMainScreen();
+
+        if (!data.gameData.commonData.gameStarted) data.gameData.commonData.gameStarted = true;
+        else player.transform.position = data.gameData.commonData.playerPosition;
+    }
+
+    private void OnApplicationPause()
+    {
+        AutoSaveGame();
+    }
+
+    private void OnApplicationQuit()
+    {
+        AutoSaveGame();
+    }
+
+    private void AutoSaveGame()
+    {
+        Debug.Log("AutoSave");
+        BeforeAutoSaveGameEvent?.Invoke();
+        data.gameData.commonData.playerPosition = player.transform.position;
+        data.SaveAll();
     }
 }

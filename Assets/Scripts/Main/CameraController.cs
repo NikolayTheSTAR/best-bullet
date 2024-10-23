@@ -18,12 +18,15 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        FocusTo(defaultFocus);
+        FocusTo(defaultFocus, false);
     }
     
-    public void FocusTo(ICameraFocusable focus)
+    public void FocusTo(ICameraFocusable focus, bool useSmooth = true)
     {
-        virtualCamera.m_Follow = focus?.transform;
+        if (focus == null) return;
+
+        virtualCamera.m_Follow = focus.transform;
+        if (!useSmooth) virtualCamera.transform.position = focus.transform.position;
     }
 }
 

@@ -9,7 +9,7 @@ public class CurrencyInWorldGetter : MonoBehaviour
     [SerializeField] private EntranceTrigger trigger;
     [SerializeField] private Transform flyToPos;
 
-    public event Action<CurrencyType, int> OnGetCurrencyEvent;
+    public event Action<int, CurrencyType, int> OnGetCurrencyEvent;
 
     public void Init()
     {
@@ -29,7 +29,8 @@ public class CurrencyInWorldGetter : MonoBehaviour
         currency.gameObject.SetActive(false);
         // todo fly currency to flyToPos (with DropContainer)
         // todo after fly call OnGetCurrencyEvent
+        // todo зафиксировать что монета сбрана, она не должна появляться в следующей сессии
 
-        OnGetCurrencyEvent?.Invoke(currency.CurrencyType, currency.Value);
+        OnGetCurrencyEvent?.Invoke(currency.Index, currency.CurrencyType, currency.Value);
     }
 }

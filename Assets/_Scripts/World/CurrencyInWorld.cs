@@ -7,4 +7,12 @@ public class CurrencyInWorld : MonoBehaviour
     
     public CurrencyType CurrencyType => currencyType;
     public int Value => value;
+
+    private int index;
+    public int Index => index;
+
+    public void Init(int index)
+    {
+        this.index = index;
+    }
 }

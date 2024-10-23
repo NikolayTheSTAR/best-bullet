@@ -191,6 +191,9 @@ namespace TheSTAR.Data
             public bool gameRated;
             public bool rateUsPlanned;
             public DateTime nextRateUsPlan;
+
+            public bool gameStarted = false;
+            public SerializedVector3 playerPosition;
         }
 
         [Serializable]
@@ -233,6 +236,8 @@ namespace TheSTAR.Data
         public class LevelData : DataSection
         {
             public override DataSectionType SectionType => DataSectionType.Level;
+
+            public Dictionary<int, bool> collectedCurrencyItems = new();
         }
 
         [Serializable]
@@ -316,5 +321,28 @@ namespace TheSTAR.Data
         Notifications,
         Tutorial,
         DailyBonus
+    }
+}
+
+[Serializable]
+public struct SerializedVector3
+{
+    public float x;
+    public float y;
+    public float z;
+
+    public static implicit operator Vector3(SerializedVector3 value)
+    {
+        return new (value.x, value.y, value.z);
+    }
+    
+    public static implicit operator SerializedVector3(Vector3 value)
+    {
+        return new SerializedVector3 
+        {
+            x = value.x,
+            y = value.y, 
+            z = value.z 
+        };  
     }
 }
