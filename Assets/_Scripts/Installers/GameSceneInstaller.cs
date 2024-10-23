@@ -10,6 +10,7 @@ public class GameSceneInstaller : MonoInstaller
 {
     [SerializeField] private GameWorld worldPrefab;
     [SerializeField] private CameraController worldCameraPrefab;
+    [SerializeField] private GameController gameControllerPrefab;
 
     [Header("GUI")]
     [SerializeField] private GuiController guiControllerPrefab;
@@ -33,6 +34,9 @@ public class GameSceneInstaller : MonoInstaller
         // world
         var world = Container.InstantiatePrefabForComponent<GameWorld>(worldPrefab);
         Container.Bind<GameWorld>().FromInstance(world).AsSingle();
+
+        var gameController = Container.InstantiatePrefabForComponent<GameController>(gameControllerPrefab);
+        Container.Bind<GameController>().FromInstance(gameController).AsSingle();
 
         // gui
         InstallGuiScreens();
