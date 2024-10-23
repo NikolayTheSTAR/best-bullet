@@ -77,10 +77,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 119651a7de96143aa9fdfefcffb3aa1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldPrefab: {fileID: 2832483029581713376, guid: c5cc463d1e10f422281b894f98dcc29c, type: 3}
   worldCameraPrefab: {fileID: 6289751917837412217, guid: 1774df53470d14ad4981c6633d4de100, type: 3}
   gameControllerPrefab: {fileID: 7323282797601191091, guid: 1d4f5451e559c47dcaa7d6d843e2ea3f, type: 3}
   playerPrefab: {fileID: 7452998440400282464, guid: 1528ab92f778a4480a936f508b11e382, type: 3}
+  keyInputPrefab: {fileID: 3368194185070649104, guid: d95db192e21984a4ba84711bde86904f, type: 3}
   guiControllerPrefab: {fileID: 3393732523295581646, guid: c0611db02a3c248239e85f94284f46a2, type: 3}
   screenPrefabs:
   - {fileID: 6206188417071900033, guid: 9be99ed0a80e843bda5b43c335d7fed5, type: 3}

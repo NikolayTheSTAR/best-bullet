@@ -11,6 +11,7 @@ public class GameSceneInstaller : MonoInstaller
     [SerializeField] private CameraController worldCameraPrefab;
     [SerializeField] private GameController gameControllerPrefab;
     [SerializeField] private Player playerPrefab;
+    [SerializeField] private KeyInput keyInputPrefab;
 
     [Header("GUI")]
     [SerializeField] private GuiController guiControllerPrefab;
@@ -31,6 +32,10 @@ public class GameSceneInstaller : MonoInstaller
         var player = Container.InstantiatePrefabForComponent<Player>(playerPrefab);
         Container.Bind<Player>().FromInstance(player).AsSingle();
         Container.Bind<ICameraFocusable>().FromInstance(player).AsSingle();
+        Container.Bind<IKeyInputHandler>().FromInstance(player).AsSingle();
+
+        var keyInput = Container.InstantiatePrefabForComponent<KeyInput>(keyInputPrefab);
+        Container.Bind<KeyInput>().FromInstance(keyInput).AsSingle();
 
         var camera = Container.InstantiatePrefabForComponent<CameraController>(worldCameraPrefab);
         Container.Bind<CameraController>().FromInstance(camera).AsSingle();
