@@ -73,7 +73,8 @@ public class EnemiesContainer : MonoBehaviour
     private void SpawnRandomEnemy()
     {
         var randomPos = ArrayUtility.GetRandomValue(spawnPoints);
-        SpawnEnemy(gameConfig.Get.EnemyMaxHP, gameConfig.Get.EnemyMaxHP, randomPos.position);
+
+        SpawnEnemy(gameConfig.Get.EnemyMaxHP, gameConfig.Get.EnemyMaxHP, randomPos.position + new Vector3(Random.Range(-1f, 1), 0, Random.Range(-1f, 1)));
     }
 
     private void SpawnEnemy(int currentHp, int maxHp, Vector3 pos)
@@ -86,10 +87,13 @@ public class EnemiesContainer : MonoBehaviour
             enemy.transform.position = pos;
             enemy.gameObject.SetActive(true);
         }
-        else enemy = Instantiate(enemyPrefab, pos, Quaternion.identity, transform);
+        else
+        {
+            enemy = Instantiate(enemyPrefab, pos, Quaternion.identity, transform);
+            enemy.HpSystem.OnDieEvent += (hpSystem) => OnDie(hpSystem.GetComponent<Enemy>());
+        }
 
         enemy.Init(bullets, currentHp, maxHp);
-        enemy.HpSystem.OnDieEvent += (hpSystem) => OnDie(hpSystem.GetComponent<Enemy>());
         activeEnemies.Add(enemy);
     }
 

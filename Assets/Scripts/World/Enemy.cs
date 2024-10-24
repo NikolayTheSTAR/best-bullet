@@ -11,4 +11,9 @@ public class Enemy : Creature
         hpSystem.Init(currentHP, maxHP);
         shooter.Init(bullets, BulletType.Default, 1);
     }
+
+    private void Update()
+    {
+        MoveTo(Vector2.zero);
+    }
 }
