@@ -3,6 +3,8 @@ using UnityEngine;
 using TheSTAR.Utility;
 using TheSTAR.Sound;
 using Zenject;
+using DG.Tweening;
+using System;
 
 public class BulletsContainer : MonoBehaviour
 {
@@ -10,10 +12,13 @@ public class BulletsContainer : MonoBehaviour
 
     private SoundController sounds;
 
-    private List<Bullet> _activeBullets = new();
-    private Dictionary<BulletType, List<Bullet>> _bulletsPool;
+    private List<Bullet> activeBullets = new();
+    private Dictionary<BulletType, Queue<Bullet>> inactiveBulletsPool;
 
     private const float BulletsSpeed = 8;
+    private const int MaxLifeTime = 5;
+
+    private Tweener autoDespawnTweener;
 
     [Inject]
     private void Construct(SoundController sounds)
@@ -24,47 +29,76 @@ public class BulletsContainer : MonoBehaviour
     private void Start()
     {
         Init();
+        WaitForAutoDespawn();
     }
 
     public void Init()
     {
         var allBulletTypes = EnumUtility.GetValues<BulletType>();
-        _bulletsPool = new();
-        foreach (var bulletType in allBulletTypes) _bulletsPool.Add(bulletType, new());
+        inactiveBulletsPool = new();
+        foreach (var bulletType in allBulletTypes) inactiveBulletsPool.Add(bulletType, new());
     }
 
     public void Shoot(Shooter shooter, BulletType bulletType, int force, Vector3 direction)
     {
-        Bullet bullet = PoolUtility.GetPoolObject(_bulletsPool[bulletType], info => !info.gameObject.activeSelf, shooter.ShootingPos.position, CreateNewBullet);
+        var inactiveBulletsOfType = inactiveBulletsPool[bulletType];
+
+        Bullet bullet;
+        if (inactiveBulletsOfType.Count > 0)
+        {
+            bullet = inactiveBulletsOfType.Dequeue();
+            bullet.transform.position = shooter.ShootingPos.position;
+            bullet.gameObject.SetActive(true);
+        }
+        else bullet = CreateNewBullet(shooter.ShootingPos.position);
+
         bullet.transform.LookAt(shooter.ShootingPos.position + direction);
-        bullet.Init(BulletsSpeed, force);
-        _activeBullets.Add(bullet);
+        bullet.Init(BulletsSpeed, force, MaxLifeTime);
+        activeBullets.Add(bullet);
+
+        if (activeBullets.Count == 1) WaitForAutoDespawn();
 
         Bullet CreateNewBullet(Vector3 pos)
         {
             var bullet = Instantiate(bulletPrefabs.Get(bulletType), shooter.ShootingPos.position, Quaternion.identity, transform);
-            _bulletsPool[bulletType].Add(bullet);
             bullet.OnCompleteFlyEvent += OnBulletCompleteFly;
             return bullet;
         }
+    }
+
+    private void WaitForAutoDespawn()
+    {
+        autoDespawnTweener?.Kill();
+
+        autoDespawnTweener =
+        DOVirtual.Float(0f, 1f, MaxLifeTime, (value) => {}).OnComplete(() =>
+        {
+            for (int i = activeBullets.Count - 1; i >= 0; i--)
+            {
+                Bullet b = activeBullets[i];
+                if (DateTime.Now >= b.EndLifeTime) b.ForceDespawn();
+            }
+
+            if (activeBullets.Count > 0) WaitForAutoDespawn();
+        }).SetEase(Ease.Linear);
     }
 
     #region Simulation
 
     public void StopSimulate()
     {
-        foreach (var pool in _bulletsPool.Values)
+        for (int i = activeBullets.Count - 1; i >= 0; i--)
         {
-            foreach (var b in pool) b.gameObject.SetActive(false);
+            Bullet b = activeBullets[i];
+            b.ForceDespawn();
         }
-        _activeBullets.Clear();
     }
 
     private void Update()
     {
-        for (int i = 0; i < _activeBullets.Count; i++)
+        for (int i = activeBullets.Count - 1; i >= 0; i--)
         {
-            Bullet b = _activeBullets[i];
+            Bullet b = activeBullets[i];
             b.Fly();
         }
     }
@@ -73,7 +107,7 @@ public class BulletsContainer : MonoBehaviour
 
     private void OnBulletCompleteFly(Bullet b)
     {
-        _activeBullets.Remove(b);
+        activeBullets.Remove(b);
     }
 }
 
