@@ -1,14 +1,12 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 using TheSTAR.Data;
-using TheSTAR.Sound;
-using TheSTAR.GUI;
-using TheSTAR.Utility;
+using Zenject;
 
-public class GameWorld : MonoBehaviour
+public class ItemsInWorldContainer : MonoBehaviour
 {
-    [SerializeField] private ItemInWorld[] currency;
+    [SerializeField] private ItemInWorld[] items;
 
     private DataController data;
 
@@ -27,10 +25,10 @@ public class GameWorld : MonoBehaviour
     {
         var collectedCurrencyItems = data.gameData.levelData.collectedItems;
 
-        for (int i = 0; i < currency.Length; i++)
+        for (int i = 0; i < items.Length; i++)
         {
-            currency[i].Init(i);
-            currency[i].gameObject.SetActive(!collectedCurrencyItems.ContainsKey(i) || !collectedCurrencyItems[i]);
+            items[i].Init(i);
+            items[i].gameObject.SetActive(!collectedCurrencyItems.ContainsKey(i) || !collectedCurrencyItems[i]);
         }
     }
 }

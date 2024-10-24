@@ -8,6 +8,7 @@ TagManager:
   - Factory
   - Item
   - CurrencyInWorld
+  - Creature
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - UI
   - Bullet
   - Location
-  - 
+  - Creature
   - 
   - 
   - 

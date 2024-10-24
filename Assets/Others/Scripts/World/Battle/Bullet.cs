@@ -40,9 +40,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Creature")) other.GetComponent<HpSystem>().Damage(force);
         CompleteFly();
-
-        // наносить урон сущностям с HpSystem
-        //Debug.Log("Bullet enter: " + other.name);
     }
 }
