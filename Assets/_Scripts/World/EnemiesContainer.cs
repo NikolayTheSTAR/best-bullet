@@ -22,15 +22,39 @@ public class EnemiesContainer : MonoBehaviour
     private const int EnemiesLimit = 5;
 
     [Inject]
-    private void Construct(DataController data, BulletsContainer bullets)
+    private void Construct(DataController data, BulletsContainer bullets, AutoSave autoSave)
     {
         this.data = data;
         this.bullets = bullets;
+        autoSave.BeforeAutoSaveGameEvent += () =>
+        {
+            var enemiesData = data.gameData.levelData.enemies;
+            
+            enemiesData.Clear();
+
+            for (int i = 0; i < activeEnemies.Count; i++)
+            {
+                var activeEnemy = activeEnemies[i];
+                enemiesData.Add(new DataController.EnemyData(activeEnemy.HpSystem.CurrentHP, activeEnemy.HpSystem.MaxHP, activeEnemy.transform.position));
+            }
+        };
     }
 
     private void Start()
     {
+        LoadEnemies();
         WaitForSpawn(SpawnStep);
+    }
+
+    private void LoadEnemies()
+    {
+        var enemiesData = data.gameData.levelData.enemies;
+            
+        for (int i = 0; i < enemiesData.Count; i++)
+        {
+            var enemyData = enemiesData[i];
+            SpawnEnemy(enemyData.currentHP, enemyData.maxHP, enemyData.position);
+        }
     }
 
     private void WaitForSpawn(float timeWait)
@@ -46,8 +70,13 @@ public class EnemiesContainer : MonoBehaviour
     private void SpawnRandomEnemy()
     {
         var randomPos = ArrayUtility.GetRandomValue(spawnPoints);
-        var enemy = Instantiate(enemyPrefab, randomPos.position, Quaternion.identity, transform);
-        enemy.Init(bullets, gameConfig.Get.EnemyMaxHP, gameConfig.Get.EnemyMaxHP);
+        SpawnEnemy(gameConfig.Get.EnemyMaxHP, gameConfig.Get.EnemyMaxHP, randomPos.position);
+    }
+
+    private void SpawnEnemy(int currentHp, int maxHp, Vector3 pos)
+    {
+        var enemy = Instantiate(enemyPrefab, pos, Quaternion.identity, transform);
+        enemy.Init(bullets, currentHp, maxHp);
         activeEnemies.Add(enemy);
     }
 }

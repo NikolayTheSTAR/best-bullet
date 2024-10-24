@@ -30,6 +30,8 @@ public class GameSceneInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
+        Container.Bind<AutoSave>().AsSingle();
+
         InstallGuiContainers();
 
         var bullets = Container.InstantiatePrefabForComponent<BulletsContainer>(bulletsContainerPrefab);

@@ -239,6 +239,7 @@ namespace TheSTAR.Data
             public override string DataFileName => "level_data";
 
             public Dictionary<int, bool> collectedItems = new();
+            public List<EnemyData> enemies = new();
         }
 
         [Serializable]
@@ -324,6 +325,20 @@ namespace TheSTAR.Data
             public SerializedVector3 playerPosition;
             public int playerCurrentHp;
             public int playerMaxHp;
+        }
+    
+        public struct EnemyData
+        {
+            public int currentHP;
+            public int maxHP;
+            public SerializedVector3 position;
+
+            public EnemyData(int currentHP, int maxHP, Vector3 position)
+            {
+                this.currentHP = currentHP;
+                this.maxHP = maxHP;
+                this.position = position;
+            }
         }
     }
 

@@ -13,11 +13,17 @@ public class Player : Creature, ICameraFocusable, IKeyInputHandler, IClickInputH
     private BulletsContainer bullets;
     
     [Inject]
-    private void Construct(DataController data, CurrencyController currency, BulletsContainer bullets)
+    private void Construct(DataController data, CurrencyController currency, BulletsContainer bullets, AutoSave autoSave)
     {
         this.data = data;
         this.currency = currency;
         this.bullets = bullets;
+        autoSave.BeforeAutoSaveGameEvent += () =>
+        {
+            data.gameData.playerData.playerPosition = transform.position;
+            data.gameData.playerData.playerCurrentHp = HpSystem.CurrentHP;
+            data.gameData.playerData.playerMaxHp = HpSystem.MaxHP;
+        };
     }
 
     public void Init(int currentHp, int maxHp)
