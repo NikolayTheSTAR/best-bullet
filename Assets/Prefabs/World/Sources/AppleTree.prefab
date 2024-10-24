@@ -591,7 +591,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6684087639638595377}
-  - component: {fileID: 6684087639638595391}
   m_Layer: 0
   m_Name: AppleTree
   m_TagString: Source
@@ -616,27 +615,6 @@ Transform:
   - {fileID: 7830374137782879829}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &6684087639638595391
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6684087639638595390}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.6
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6684087639731519296
 GameObject:
   m_ObjectHideFlags: 0

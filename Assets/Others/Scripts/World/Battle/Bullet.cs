@@ -14,11 +14,6 @@ public class Bullet : MonoBehaviour
     private DateTime endLifeTime;
     public DateTime EndLifeTime => endLifeTime;
 
-    // todo можно чтобы пуля уничтожалась если врезается в любой объект (слой должен быть заметен для слоя Bullet)
-    // но урон соответственно наносится только сущностям с HpSystem
-
-    // todo отдельный слой для пуль
-
     public void Init(float speed, int force, int maxLifetimeSeconds)
     {
         this.speed = speed;
@@ -40,5 +35,13 @@ public class Bullet : MonoBehaviour
     {
         gameObject.SetActive(false);
         OnCompleteFlyEvent?.Invoke(this);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        CompleteFly();
+
+        // наносить урон сущностям с HpSystem
+        //Debug.Log("Bullet enter: " + other.name);
     }
 }

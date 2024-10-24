@@ -544,7 +544,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3589577471197030353}
-  - component: {fileID: 3589577471197030359}
   m_Layer: 0
   m_Name: IronMine
   m_TagString: Source
@@ -570,27 +569,6 @@ Transform:
   - {fileID: 3589577472254410680}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &3589577471197030359
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3589577471197030354}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.6
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3589577471288480347
 GameObject:
   m_ObjectHideFlags: 0
