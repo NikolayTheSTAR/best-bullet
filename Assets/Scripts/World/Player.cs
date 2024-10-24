@@ -10,18 +10,19 @@ public class Player : Creature, ICameraFocusable, IKeyInputHandler, IClickInputH
 
     private DataController data;
     private CurrencyController currency;
+    private BulletsContainer bullets;
     
     [Inject]
-    private void Construct(DataController data, CurrencyController currency)
+    private void Construct(DataController data, CurrencyController currency, BulletsContainer bullets)
     {
         this.data = data;
         this.currency = currency;
+        this.bullets = bullets;
     }
 
-    public override void Init(int currentHp, int maxHp)
+    public void Init(int currentHp, int maxHp)
     {
-        base.Init(currentHp, maxHp);
-
+        hpSystem.Init(currentHp, maxHp);
         itemGetter.Init();
         itemGetter.OnGetCurrencyEvent += (index, itemType, value) =>
         {
@@ -39,7 +40,7 @@ public class Player : Creature, ICameraFocusable, IKeyInputHandler, IClickInputH
             else colledtedItems[index] = true;
         };
 
-        shooter.Init(BulletType.Default, 1);
+        shooter.Init(bullets, BulletType.Default, 1);
     }
 
     #region KeyInput

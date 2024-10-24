@@ -17,3 +17,4 @@ MonoBehaviour:
   lockData: 0
   useGDPR: 0
   playerMaxHP: 10
+  enemyMaxHP: 3

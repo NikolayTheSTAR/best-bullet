@@ -14,12 +14,14 @@ public class GameConfig : ScriptableObject
 
     [Space]
     [SerializeField] private int playerMaxHP = 10;
+    [SerializeField] private int enemyMaxHP = 10;
 
     public GameAbVersionType VersionType => versionType;
     public bool UseCheats => useCheats;
     public bool LockData => lockData;
     public bool UseGDPR => useGDPR;
     public int PlayerMaxHP => playerMaxHP;
+    public int EnemyMaxHP => enemyMaxHP;
 
     [ContextMenu("Test")]
     private void ConfigurateForTest()

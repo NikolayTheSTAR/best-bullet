@@ -5,4 +5,10 @@ using UnityEngine;
 public class Enemy : Creature
 {
     [SerializeField] private Shooter shooter;
+
+    public void Init(BulletsContainer bullets, int currentHP, int maxHP)
+    {
+        hpSystem.Init(currentHP, maxHP);
+        shooter.Init(bullets, BulletType.Default, 1);
+    }
 }

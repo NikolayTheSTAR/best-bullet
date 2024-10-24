@@ -11,11 +11,6 @@ public abstract class Creature : MonoBehaviour
 
     public HpSystem HpSystem => hpSystem;
 
-    public virtual void Init(int currentHp, int maxHp)
-    {
-        hpSystem.Init(currentHp, maxHp);
-    }
-
     protected void MoveTo(Vector2 direction)
     {
         Vector3 finalMoveDirection;

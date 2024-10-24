@@ -13,14 +13,9 @@ public class Shooter : MonoBehaviour
 
     private BulletsContainer bullets;
 
-    [Inject]
-    private void Construct(BulletsContainer bullets)
+    public void Init(BulletsContainer bullets, BulletType bulletType, int force)
     {
         this.bullets = bullets;
-    }
-
-    public void Init(BulletType bulletType, int force)
-    {
         this.bulletType = bulletType;
         this.force = force;
     }
