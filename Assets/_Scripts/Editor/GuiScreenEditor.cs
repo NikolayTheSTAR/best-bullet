@@ -32,12 +32,6 @@ public class GuiScreenEditor : Editor
                 _target.universalElementsSettings.Set(i, GUILayout.Toggle(_target.universalElementsSettings.Get(i), GetSimpleTypeName(allUeTypes[i].ToString())));
             }
         }
-
-        if (_target.universalElementsSettings.ContainsKey(0) && _target.universalElementsSettings.Get(0))
-        {
-            _target.useSoftCounter = GUILayout.Toggle(_target.useSoftCounter, "UseSoftCounter");
-            _target.useHardCounter = GUILayout.Toggle(_target.useHardCounter, "UseHardCounter");
-        }
     }
 
     private string GetSimpleTypeName(string fullTypeName)

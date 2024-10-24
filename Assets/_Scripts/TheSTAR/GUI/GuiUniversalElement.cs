@@ -1,5 +1,6 @@
 using System;
 using TheSTAR.Utility;
+using UnityEngine;
 
 namespace TheSTAR.GUI
 {
@@ -8,6 +9,9 @@ namespace TheSTAR.GUI
     /// </summary>
     public abstract class GuiUniversalElement : GuiObject, IComparable<GuiUniversalElement>, IComparableType<GuiUniversalElement>
     {
+        [SerializeField] private UniversalElementPlacement placement;
+        public UniversalElementPlacement Placement => placement;
+
         #region Comparable
 
         public override string ToString() => GetType().ToString();
@@ -17,4 +21,10 @@ namespace TheSTAR.GUI
 
         #endregion
     }
+}
+
+public enum UniversalElementPlacement
+{
+    Top,
+    Bottom
 }

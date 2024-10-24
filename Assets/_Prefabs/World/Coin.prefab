@@ -151,8 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85dcc41d71fa446ee9d8782de1d1e415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currencyType: 0
-  value: 1
+  itemType: 0
+  value: 10
 --- !u!111 &4722232738491422969
 Animation:
   m_ObjectHideFlags: 0

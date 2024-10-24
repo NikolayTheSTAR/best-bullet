@@ -10,6 +10,7 @@ public class GameSceneInstaller : MonoInstaller
 {
     [SerializeField] private CameraController worldCameraPrefab;
     [SerializeField] private GameController gameControllerPrefab;
+    [SerializeField] private BulletsContainer bulletsContainerPrefab;
     [SerializeField] private Player playerPrefab;
     [SerializeField] private KeyInput keyInputPrefab;
 
@@ -29,10 +30,14 @@ public class GameSceneInstaller : MonoInstaller
     {
         InstallGuiContainers();
 
+        var bullets = Container.InstantiatePrefabForComponent<BulletsContainer>(bulletsContainerPrefab);
+        Container.Bind<BulletsContainer>().FromInstance(bullets).AsSingle();
+
         var player = Container.InstantiatePrefabForComponent<Player>(playerPrefab);
         Container.Bind<Player>().FromInstance(player).AsSingle();
         Container.Bind<ICameraFocusable>().FromInstance(player).AsSingle();
         Container.Bind<IKeyInputHandler>().FromInstance(player).AsSingle();
+        Container.Bind<IClickInputHandler>().FromInstance(player).AsSingle();
 
         var keyInput = Container.InstantiatePrefabForComponent<KeyInput>(keyInputPrefab);
         Container.Bind<KeyInput>().FromInstance(keyInput).AsSingle();
@@ -73,7 +78,12 @@ public class GameSceneInstaller : MonoInstaller
         GuiUniversalElement ue;
         for (int i = 0; i < universalElementPrefabs.Length; i++)
         {
-            ue = Container.InstantiatePrefabForComponent<GuiUniversalElement>(universalElementPrefabs[i], gui.UniversalElementsContainer.position, Quaternion.identity, gui.UniversalElementsContainer);
+            var uePrefab = universalElementPrefabs[i];
+            ue = Container.InstantiatePrefabForComponent<GuiUniversalElement>(
+                uePrefab, 
+                gui.UniversalElementsContainer(uePrefab.Placement).position, 
+                Quaternion.identity, 
+                gui.UniversalElementsContainer(uePrefab.Placement));
             createdUniversalElements[i] = ue;
         }
 

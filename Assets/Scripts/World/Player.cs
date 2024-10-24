@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
 
-public class Player : Creature, ICameraFocusable, IKeyInputHandler
+public class Player : Creature, ICameraFocusable, IKeyInputHandler, IClickInputHandler
 {
     [SerializeField] private NavMeshAgent meshAgent;
     [SerializeField] private Transform visualTran;
     [SerializeField] private ItemInWorldGetter itemGetter;
+    [SerializeField] private Shooter shooter;
 
     private DataController data;
     private CurrencyController currency;
@@ -40,6 +41,8 @@ public class Player : Creature, ICameraFocusable, IKeyInputHandler
             if (!colledtedItems.ContainsKey(index)) colledtedItems.Add(index, true);
             else colledtedItems[index] = true;
         };
+
+        shooter.Init(BulletType.Default, 1);
     }
 
     #region KeyInput
@@ -54,6 +57,15 @@ public class Player : Creature, ICameraFocusable, IKeyInputHandler
 
     public void OnEndKeyInput() 
     {}
+
+    #endregion
+
+    #region ClickInput
+
+    public void OnClick()
+    {
+        Shoot();
+    }
 
     #endregion
 
@@ -78,5 +90,10 @@ public class Player : Creature, ICameraFocusable, IKeyInputHandler
         }
 
         meshAgent.SetDestination(finalMoveDirection);
+    }
+
+    private void Shoot()
+    {
+        shooter.Shoot(visualTran.forward);
     }
 }

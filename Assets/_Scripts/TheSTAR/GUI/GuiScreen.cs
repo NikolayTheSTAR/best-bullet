@@ -28,8 +28,8 @@ namespace TheSTAR.GUI
             }
         }
 
-        [HideInInspector] public bool useHardCounter;
-        [HideInInspector] public bool useSoftCounter;
+        //[HideInInspector] public bool useHardCounter;
+        //[HideInInspector] public bool useSoftCounter;
 
         public bool Pause => pause;
 

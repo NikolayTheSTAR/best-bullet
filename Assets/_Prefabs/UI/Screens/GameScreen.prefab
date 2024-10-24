@@ -794,8 +794,8 @@ MonoBehaviour:
     keyValues:
     - key: 0
       value: 1
-  useHardCounter: 1
-  useSoftCounter: 1
+    - key: 1
+      value: 1
   settingsBtn: {fileID: 4094656387953023130}
   dailyBonusBtn: {fileID: 5154303109627301780}
   hpBar: {fileID: 1466806601376645598}

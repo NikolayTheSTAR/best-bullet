@@ -13,8 +13,9 @@ namespace TheSTAR.GUI
         private GuiUniversalElement[] universalElements = new GuiUniversalElement[0];
         private GuiScreen mainScreen;
 
+        [SerializeField] private Transform bottomUniversalElementsContainer;
         [SerializeField] private Transform screensContainer;
-        [SerializeField] private Transform universalElementsContainer;
+        [SerializeField] private Transform topUniversalElementsContainer;
         [SerializeField] private bool deactivateOtherScreensByStart = true;
         [SerializeField] private bool showMainScreenByStart = true;
 
@@ -24,7 +25,8 @@ namespace TheSTAR.GUI
         public GuiScreen CurrentScreen => _currentScreen;
 
         public Transform ScreensContainer => screensContainer;
-        public Transform UniversalElementsContainer => universalElementsContainer;
+        public Transform UniversalElementsContainer(UniversalElementPlacement placement) 
+            => placement == UniversalElementPlacement.Bottom ? bottomUniversalElementsContainer : topUniversalElementsContainer;
 
         private readonly Type mainScreenType = typeof(GameScreen);
         private Type[] allUniversalElementTypes;
@@ -69,12 +71,7 @@ namespace TheSTAR.GUI
             bool UpdateUniversalPanel(Type universalElementType, bool needShow)
             {
                 var element = FindUniversalElement(universalElementType);
-                if (needShow)
-                {
-                    if (element is TopCountersContainer topCounters) topCounters.InitBeforeShow(screen.useSoftCounter, screen.useHardCounter);
-
-                    element.Show();
-                }
+                if (needShow) element.Show();
                 else element.Hide();
 
                 return needShow;
