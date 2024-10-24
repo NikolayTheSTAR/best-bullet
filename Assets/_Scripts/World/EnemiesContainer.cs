@@ -19,12 +19,13 @@ public class EnemiesContainer : MonoBehaviour
     private DataController data;
     private BulletsContainer bullets;
     private ItemsInWorldContainer itemsInWorld;
+    private Player player;
 
     private const float SpawnStep = 5;
     private const int EnemiesLimit = 5;
 
     [Inject]
-    private void Construct(DataController data, BulletsContainer bullets, AutoSave autoSave, ItemsInWorldContainer itemsInWorld)
+    private void Construct(DataController data, BulletsContainer bullets, AutoSave autoSave, ItemsInWorldContainer itemsInWorld, Player player)
     {
         this.data = data;
         this.bullets = bullets;
@@ -41,12 +42,21 @@ public class EnemiesContainer : MonoBehaviour
             }
         };
         this.itemsInWorld = itemsInWorld;
+        this.player = player;
     }
 
     private void Start()
     {
         LoadEnemies();
         WaitForSpawn(SpawnStep);
+    }
+
+    private void Update()
+    {
+        for (int i = 0; i < activeEnemies.Count; i++)
+        {
+            activeEnemies[i].Simulate(player.transform);
+        }
     }
 
     private void LoadEnemies()

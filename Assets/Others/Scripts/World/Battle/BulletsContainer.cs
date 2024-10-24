@@ -15,7 +15,7 @@ public class BulletsContainer : MonoBehaviour
     private List<Bullet> activeBullets = new();
     private Dictionary<BulletType, Queue<Bullet>> inactiveBulletsPool;
 
-    private const float BulletsSpeed = 8;
+    private const float BulletsSpeed = 10;
     private const int MaxLifeTime = 5;
 
     private Tweener autoDespawnTweener;
