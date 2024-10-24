@@ -16,7 +16,6 @@ public class ProjectInstaller : MonoInstaller
         Container.Bind<DataController>().AsSingle();
         Container.Bind<DailyBonusService>().AsSingle();
         Container.Bind<NotificationController>().AsSingle();
-        Container.Bind<CurrencyController>().AsSingle();
         Container.Bind<AnalyticsManager>().AsSingle();
 
         var soundController = Container.InstantiatePrefabForComponent<SoundController>(soundControllerPrefab, soundControllerPrefab.transform.position, Quaternion.identity, null);

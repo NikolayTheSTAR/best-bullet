@@ -29,6 +29,7 @@ public class Player : Creature, ICameraFocusable, IKeyInputHandler, IClickInputH
     public void Init(int currentHp, int maxHp)
     {
         hpSystem.Init(currentHp, maxHp);
+
         itemGetter.Init();
         itemGetter.OnGetItemEvent += (index, itemType, value) =>
         {

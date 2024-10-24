@@ -229,6 +229,11 @@ namespace TheSTAR.Data
                 if (currencyData.ContainsKey(currencyType)) return currencyData[currencyType];
                 else return 0;
             }
+
+            public void ClearAll()
+            {
+                currencyData = new();
+            }
         }
 
         // Данные по прогрессу игрока в рамках уровня
@@ -241,6 +246,13 @@ namespace TheSTAR.Data
             public Dictionary<int, bool> collectedItems = new();
             public List<DropData> dropData = new();
             public List<EnemyData> enemies = new();
+
+            public void ClearAll()
+            {
+                collectedItems = new();
+                dropData = new();
+                enemies = new();
+            }
         }
 
         [Serializable]

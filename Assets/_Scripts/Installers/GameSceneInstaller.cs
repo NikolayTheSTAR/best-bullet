@@ -30,6 +30,7 @@ public class GameSceneInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
+        Container.Bind<CurrencyController>().AsSingle();
         Container.Bind<AutoSave>().AsSingle();
 
         InstallGuiContainers();

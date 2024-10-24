@@ -5,6 +5,7 @@ using TheSTAR.Data;
 using TheSTAR.Sound;
 using TheSTAR.GUI;
 using TheSTAR.Utility;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -73,6 +74,8 @@ public class GameController : MonoBehaviour
             player.transform.position = data.gameData.playerData.playerPosition;
         }
 
+        player.HpSystem.OnDieEvent += (_) => Defeat();
+
         gui.ShowMainScreen();
     }
 
@@ -84,5 +87,19 @@ public class GameController : MonoBehaviour
     private void OnApplicationQuit()
     {
         autoSave.AutoSaveGame();
+    }
+
+    private void Defeat()
+    {
+        data.gameData.currencyData.ClearAll();
+        data.gameData.levelData.ClearAll();
+        data.gameData.commonData.gameStarted = false;
+        data.SaveAll();
+        gui.Show<DefeatScreen>();
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("Game");
     }
 }
