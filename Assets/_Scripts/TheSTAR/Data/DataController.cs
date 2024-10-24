@@ -239,6 +239,7 @@ namespace TheSTAR.Data
             public override string DataFileName => "level_data";
 
             public Dictionary<int, bool> collectedItems = new();
+            public List<DropData> dropData = new();
             public List<EnemyData> enemies = new();
         }
 
@@ -337,6 +338,20 @@ namespace TheSTAR.Data
             {
                 this.currentHP = currentHP;
                 this.maxHP = maxHP;
+                this.position = position;
+            }
+        }
+
+        public struct DropData
+        {
+            public ItemInWorldType itemInWorldType;
+            public int value;
+            public SerializedVector3 position;
+
+            public DropData(ItemInWorldType itemInWorldType, int value, Vector3 position)
+            {
+                this.itemInWorldType = itemInWorldType;
+                this.value = value;
                 this.position = position;
             }
         }

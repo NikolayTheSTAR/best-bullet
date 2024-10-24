@@ -75,6 +75,12 @@ MonoBehaviour:
   - {fileID: 5790012515473285158}
   - {fileID: 941738689218762934}
   - {fileID: 7626805231777474001}
+  itemPrefabs:
+    keyValues:
+    - key: 0
+      value: {fileID: 3708951491009118456, guid: a85f477b8305f4ecbbaca8a981a1fa8d, type: 3}
+    - key: 1
+      value: {fileID: 6423597435184754630, guid: bcf565a6f19624357aa6e8fb68737105, type: 3}
 --- !u!1001 &684391432904364000
 PrefabInstance:
   m_ObjectHideFlags: 0

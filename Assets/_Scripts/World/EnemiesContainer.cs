@@ -18,12 +18,13 @@ public class EnemiesContainer : MonoBehaviour
 
     private DataController data;
     private BulletsContainer bullets;
+    private ItemsInWorldContainer itemsInWorld;
 
     private const float SpawnStep = 5;
     private const int EnemiesLimit = 5;
 
     [Inject]
-    private void Construct(DataController data, BulletsContainer bullets, AutoSave autoSave)
+    private void Construct(DataController data, BulletsContainer bullets, AutoSave autoSave, ItemsInWorldContainer itemsInWorld)
     {
         this.data = data;
         this.bullets = bullets;
@@ -39,6 +40,7 @@ public class EnemiesContainer : MonoBehaviour
                 enemiesData.Add(new DataController.EnemyData(activeEnemy.HpSystem.CurrentHP, activeEnemy.HpSystem.MaxHP, activeEnemy.transform.position));
             }
         };
+        this.itemsInWorld = itemsInWorld;
     }
 
     private void Start()
@@ -85,7 +87,7 @@ public class EnemiesContainer : MonoBehaviour
             enemy.gameObject.SetActive(true);
         }
         else enemy = Instantiate(enemyPrefab, pos, Quaternion.identity, transform);
-        
+
         enemy.Init(bullets, currentHp, maxHp);
         enemy.HpSystem.OnDieEvent += (hpSystem) => OnDie(hpSystem.GetComponent<Enemy>());
         activeEnemies.Add(enemy);
@@ -96,5 +98,22 @@ public class EnemiesContainer : MonoBehaviour
         enemy.gameObject.SetActive(false);
         activeEnemies.Remove(enemy);
         inactiveEnemiesPool.Enqueue(enemy);
+
+        // drop
+        ItemInWorldType rewardType;
+        int rewardValue;
+        float r = Random.Range(0f, 1f);
+        if (r < 0.5f)
+        {
+            rewardType = ItemInWorldType.Coin;
+            rewardValue = 10;
+        }
+        else
+        {
+            rewardType = ItemInWorldType.HP;
+            rewardValue = 1;
+        }
+
+        itemsInWorld.Drop(rewardType, rewardValue, enemy.transform.position);
     }
 }

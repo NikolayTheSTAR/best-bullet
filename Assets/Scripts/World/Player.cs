@@ -30,7 +30,7 @@ public class Player : Creature, ICameraFocusable, IKeyInputHandler, IClickInputH
     {
         hpSystem.Init(currentHp, maxHp);
         itemGetter.Init();
-        itemGetter.OnGetCurrencyEvent += (index, itemType, value) =>
+        itemGetter.OnGetItemEvent += (index, itemType, value) =>
         {
             if (itemType == ItemInWorldType.Coin)
             {

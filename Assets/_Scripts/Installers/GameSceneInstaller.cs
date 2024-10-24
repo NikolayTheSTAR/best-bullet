@@ -43,11 +43,11 @@ public class GameSceneInstaller : MonoInstaller
         Container.Bind<IKeyInputHandler>().FromInstance(player).AsSingle();
         Container.Bind<IClickInputHandler>().FromInstance(player).AsSingle();
 
-        var enemies = Container.InstantiatePrefabForComponent<EnemiesContainer>(enemiesContainerPrefab);
-        Container.Bind<EnemiesContainer>().FromInstance(enemies).AsSingle();
-
         var items = Container.InstantiatePrefabForComponent<ItemsInWorldContainer>(itemsContainerPrefab);
         Container.Bind<ItemsInWorldContainer>().FromInstance(items).AsSingle();
+
+        var enemies = Container.InstantiatePrefabForComponent<EnemiesContainer>(enemiesContainerPrefab);
+        Container.Bind<EnemiesContainer>().FromInstance(enemies).AsSingle();
 
         var keyInput = Container.InstantiatePrefabForComponent<KeyInput>(keyInputPrefab);
         Container.Bind<KeyInput>().FromInstance(keyInput).AsSingle();
