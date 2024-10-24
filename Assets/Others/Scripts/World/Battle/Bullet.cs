@@ -6,13 +6,14 @@ public class Bullet : MonoBehaviour
     [SerializeField] private BulletType bulletType;
     [SerializeField] private Transform visual;
 
-    public event Action<Bullet> OnCompleteFlyEvent; // todo use
+    public event Action<Bullet> OnCompleteFlyEvent;
     
     private float speed;
 
     private int force;
     private DateTime endLifeTime;
     public DateTime EndLifeTime => endLifeTime;
+    public BulletType BulletType => bulletType;
 
     public void Init(float speed, int force, int maxLifetimeSeconds)
     {

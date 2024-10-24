@@ -108,6 +108,7 @@ public class BulletsContainer : MonoBehaviour
     private void OnBulletCompleteFly(Bullet b)
     {
         activeBullets.Remove(b);
+        inactiveBulletsPool[b.BulletType].Enqueue(b);
     }
 }
 
