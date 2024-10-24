@@ -12,6 +12,7 @@ public class EnemiesContainer : MonoBehaviour
     [SerializeField] private Transform[] spawnPoints;
 
     private List<Enemy> activeEnemies = new();
+    private Queue<Enemy> inactiveEnemiesPool = new();
 
     private readonly ResourceHelper<GameConfig> gameConfig = new("Configs/GameConfig");
 
@@ -75,8 +76,25 @@ public class EnemiesContainer : MonoBehaviour
 
     private void SpawnEnemy(int currentHp, int maxHp, Vector3 pos)
     {
-        var enemy = Instantiate(enemyPrefab, pos, Quaternion.identity, transform);
+        Enemy enemy;
+        
+        if (inactiveEnemiesPool.Count > 0)
+        {
+            enemy = inactiveEnemiesPool.Dequeue();
+            enemy.transform.position = pos;
+            enemy.gameObject.SetActive(true);
+        }
+        else enemy = Instantiate(enemyPrefab, pos, Quaternion.identity, transform);
+        
         enemy.Init(bullets, currentHp, maxHp);
+        enemy.HpSystem.OnDieEvent += (hpSystem) => OnDie(hpSystem.GetComponent<Enemy>());
         activeEnemies.Add(enemy);
+    }
+
+    private void OnDie(Enemy enemy)
+    {
+        enemy.gameObject.SetActive(false);
+        activeEnemies.Remove(enemy);
+        inactiveEnemiesPool.Enqueue(enemy);
     }
 }

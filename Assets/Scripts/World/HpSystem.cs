@@ -11,7 +11,7 @@ public class HpSystem : MonoBehaviour
 
     public event Action<int, int> OnChangeHpEvent;
     public event Action OnDamageEvent;
-    public event Action OnDieEvent;
+    public event Action<HpSystem> OnDieEvent;
 
     public void Init(int currentHp, int maxHp)
     {
@@ -37,7 +37,7 @@ public class HpSystem : MonoBehaviour
 
         OnChangeHpEvent?.Invoke(currentHp, maxHp);
         OnDamageEvent?.Invoke();
-        if (die) OnDieEvent?.Invoke();
+        if (die) OnDieEvent?.Invoke(this);
     }
 
     public void Heal(int value)
